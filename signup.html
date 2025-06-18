@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="images/favicon.png" type="">
+
+  <title>Sign Up - MENTOSO</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+  <!-- Fonts style -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome style -->
+  <link href="css/font-awesome.min.css" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet" />
+  <!-- Responsive style -->
+  <link href="css/responsive.css" rel="stylesheet" />
+
+  <style>
+    /* Custom styles for signup page */
+    .signup_form_container {
+      padding-top: 100px;
+      padding-bottom: 100px;
+    }
+
+    .signup_form {
+      background-color: #00204a;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .signup_form h2 {
+      color: #ffffff;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .signup_form input[type="text"],
+    .signup_form input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    .signup_form button[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background-color: #00bbf0;
+      color: #ffffff;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .signup_form button[type="submit"]:hover {
+      background-color: #007fa4;
+    }
+
+    /* Alert message style */
+    .alert {
+      color: #721c24;
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+  </style>
+
+</head>
+
+<body class="sub_page">
+
+  <div class="hero_area">
+    <div class="hero_bg_box">
+      <div class="bg_img_box">
+        <img src="images/hero-bg.png" alt="">
+      </div>
+    </div>
+
+    <!-- header section starts -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="index.html">
+            <span>MENTOSO</span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">Consultation</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="why.html">Why Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="team.html">Team</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="login.html"><i class="fa fa-user" aria-hidden="true"></i> Login</a>
+              </li>
+              <form class="form-inline">
+                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+              </form>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+  </div>
+
+  <!-- signup section -->
+  <section class="signup_section layout_padding">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <div class="signup_form">
+            <h2>Sign Up</h2>
+            <form action="#" onsubmit="return checkPasswordMatch();">
+              <input type="text" placeholder="Email" />
+              <input type="text" placeholder="Mobile Number " />
+              <input type="password" id="password" placeholder="Password" />
+              <input type="password" id="confirm_password" placeholder="Confirm Password" />
+              <button type="submit">Sign Up</button>
+            </form>
+            <div id="passwordMatchAlert" class="alert" style="display: none;">Passwords don't match</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- end signup section -->
+
+  <!-- jQuery -->
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <!-- Popper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <!-- Bootstrap JS -->
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <!-- Custom JS -->
+  <script type="text/javascript" src="js/custom.js"></script>
+
+  <script>
+    function checkPasswordMatch() {
+      var password = document.getElementById("password").value;
+      var confirmPassword = document.getElementById("confirm_password").value;
+
+      if (password != confirmPassword) {
+        document.getElementById("passwordMatchAlert").style.display = "block";
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+
+</html>
