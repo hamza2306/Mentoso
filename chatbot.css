@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Depression Detection Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .question-container {
+            display: none;
+        }
+        .question-container.active {
+            display: block;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 20px;
+            margin: 10px 0;
+        }
+        .progress-bar-fill {
+            height: 10px;
+            background-color: #00204a;
+            border-radius: 20px;
+            width: 0;
+        }
+        .options {
+            margin: 20px 0;
+        }
+        button {
+            background-color: #00204a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+        </div>
+        <div id="questions-container">
+            {% for i in range(questions|length) %}
+            <div class="question-container" id="question-{{i}}">
+                <p>{{ questions[i] }}</p>
+                <div class="options">
+                    {% if i == 4 or i == 5 %}
+                    <button onclick="selectOption(6, {{i}})">Not at all</button>
+                    <button onclick="selectOption(7, {{i}})">Slightly</button>
+                    <button onclick="selectOption(8, {{i}})">Moderately</button>
+                    <button onclick="selectOption(9, {{i}})">Severely</button>
+                    <button onclick="selectOption(10, {{i}})">Extremely</button>
+                    {% elif i == 6 %}
+                    <button onclick="selectOption(11, {{i}})">Extremely high</button>
+                    <button onclick="selectOption(12, {{i}})">High</button>
+                    <button onclick="selectOption(13, {{i}})">Moderate</button>
+                    <button onclick="selectOption(14, {{i}})">Low</button>
+                    <button onclick="selectOption(15, {{i}})">Extremely low</button>
+                    {% else %}
+                    <button onclick="selectOption(1, {{i}})">Never</button>
+                    <button onclick="selectOption(2, {{i}})">Rarely</button>
+                    <button onclick="selectOption(3, {{i}})">Sometimes</button>
+                    <button onclick="selectOption(4, {{i}})">Often</button>
+                    <button onclick="selectOption(5, {{i}})">Always</button>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div id="result-container" style="display: none;">
+            <h2>Prediction: <span id="result"></span></h2>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+        const totalQuestions = {{ questions|length }};
+        const responses = [];
+
+        document.getElementById('question-' + currentQuestion).classList.add('active');
+
+        function selectOption(value, index) {
+            responses[index] = value;
+            document.getElementById('question-' + index).classList.remove('active');
+            currentQuestion++;
+            if (currentQuestion < totalQuestions) {
+                document.getElementById('question-' + currentQuestion).classList.add('active');
+                updateProgressBar();
+            } else {
+                submitResponses();
+            }
+        }
+
+        function updateProgressBar() {
+            const progressBarFill = document.getElementById('progress-bar-fill');
+            progressBarFill.style.width = (currentQuestion / totalQuestions) * 100 + '%';
+        }
+
+        function submitResponses() {
+            fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ responses })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('questions-container').style.display = 'none';
+                document.getElementById('result-container').style.display = 'block';
+                document.getElementById('result').textContent = data.prediction;
+            });
+        }
+    </script>
+</body>
+</html>
